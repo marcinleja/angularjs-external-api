@@ -4,7 +4,7 @@ How to run
 
 ```bash
 # clone the repository
-$ git clone https://github.com/marcinleja/angularjs-external-api
+$ git clone https://github.com/marcinleja/angularjs-external-api.git
 
 # install dependencies with npm
 $ npm install
@@ -12,7 +12,7 @@ $ npm install
 # start the server
 $ npm start
 ```
-go to [http://localhost:9000](http://localhost:9000) in your browser.
+Go to [http://localhost:9000](http://localhost:9000) in your web browser.
 
 
 ## Developing
@@ -28,6 +28,7 @@ go to [http://localhost:9000](http://localhost:9000) in your browser.
 
 * single run: `npm test`
 * live mode: `npm run test-watch`
+
 
 
 Thanks to preboot team for providing the webpack starter configuration
