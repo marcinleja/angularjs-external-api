@@ -11,16 +11,12 @@ describe('AuthenticationSerivce', () => {
 	beforeEach(() => {
 		angular.mock.module('leadscore');
 
-		angular.mock.inject((_$rootScope_, _$q_, _BrowserStorage_, _LoginService_) => {
-			authenticationSerivceInstance = authenticationSerivce(_$rootScope_, _$q_, _BrowserStorage_, _LoginService_);
+		angular.mock.inject((_$rootScope_, _$q_, _UserCredentialsService_, _LoginService_) => {
+			authenticationSerivceInstance = authenticationSerivce(_$rootScope_, _$q_, _UserCredentialsService_, _LoginService_);
 		});
 	});
 
 	describe('when user is not logged in', () => {
-
-		it('should return null when getAuthenticationToken is called', () => {
-			expect(authenticationSerivceInstance.getAuthenticationToken()).toBeNull();
-		});
 
 		it('should return false when isAuthenticated is called', () => {
 			expect(authenticationSerivceInstance.isAuthenticated()).toBeFalsy();

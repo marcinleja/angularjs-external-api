@@ -1,8 +1,10 @@
+import {API_URL} from '../../environment.config'
+
 export default function utils($location) {
 
 	var utils = {
 		apiUrl: () => {
-			return 'https://app-staging.leadscore.io/api/v2'
+			return API_URL;
 		}
 	};
 

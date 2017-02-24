@@ -1,15 +1,17 @@
 import angular from 'angular';
 import uirouter from 'angular-ui-router';
 
+import RequestsInterceptor from './requests-interceptor';
 import AuthenticationService from './authentication.service';
-import requestsInterceptor from './requests-interceptor';
 import LoginService from './login.service';
+import UserCredentialsService from './user-credentials.service';
 import stateAuthentication from './state-authentication';
 
 
 export default angular.module('leadscore.security', [uirouter])
-  .factory('AuthenticationService', AuthenticationService)
-  .factory('RequestsInterceptor', requestsInterceptor)
-  .service('LoginService', LoginService)
-  .run(stateAuthentication)
-  .name;
+	.factory('RequestsInterceptor', RequestsInterceptor)
+	.factory('AuthenticationService', AuthenticationService)
+	.service('LoginService', LoginService)
+	.service('UserCredentialsService', UserCredentialsService)
+	.run(stateAuthentication)
+	.name;

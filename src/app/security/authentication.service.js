@@ -1,19 +1,17 @@
 import {EVENTS} from './events';
 
-export default function authenticationService($rootScope, $q, BrowserStorage, LoginService) {
+export default function authenticationService($rootScope, $q, UserCredentialsService, LoginService) {
 
 	var login,
 		logout,
 		isAuthenticated,
 		updateAuthenticationStatus,
-		getAuthenticationToken,
-		_prepareUserCredentials,
 		_storeAuthenticationData,
 		_clearAuthenticationData,
 		authenticationService;
 
-	var loggedInUser = null;
-	var userCredentialsKey = 'ls.userCredentials';
+	var userIsLoggedIn = false;
+
 
 	login = function (credentials) {
 		let defer = $q.defer();
@@ -30,45 +28,24 @@ export default function authenticationService($rootScope, $q, BrowserStorage, Lo
 	};
 
 	logout = function () {
-		return LoginService.logout(getAuthenticationToken()).then(_clearAuthenticationData, _clearAuthenticationData);
+		return LoginService.logout(UserCredentialsService.getAuthenticationToken()).then(_clearAuthenticationData, _clearAuthenticationData);
 	};
 
 	isAuthenticated = function () {
-		return loggedInUser !== null;
+		return userIsLoggedIn;
 	};
 
 	updateAuthenticationStatus = function () {
-		let user = BrowserStorage.get(userCredentialsKey);
-		if (user !== null) {
-			loggedInUser = user;
-		} else {
-			loggedInUser = null;
-		}
+		userIsLoggedIn = UserCredentialsService.getUserCredentials() !== null;
 	};
 
-	getAuthenticationToken = function () {
-		var user = BrowserStorage.get(userCredentialsKey);
-		if (user !== null) {
-			return user.authToken;
-		} else {
-			return null;
-		}
-	}
-
-	_prepareUserCredentials = function (authData) {
-		delete authData.token.expires;
-		let userCredentials = Object.assign(authData.user, authData.token);
-		userCredentials.integrations = authData.integrations;
-		return userCredentials;
-	}
-
 	_storeAuthenticationData = function (authData) {
-		BrowserStorage.set(userCredentialsKey, _prepareUserCredentials(authData));
+		UserCredentialsService.saveUserCredentials(authData);
 		$rootScope.$broadcast(EVENTS.USER_CREDENTIALS_UPDATED);
 	}
 
 	_clearAuthenticationData = function () {
-		BrowserStorage.remove(userCredentialsKey);
+		UserCredentialsService.clearUserCredentials();
 		$rootScope.$broadcast(EVENTS.USER_LOGGED_OUT);
 	}
 
@@ -76,11 +53,10 @@ export default function authenticationService($rootScope, $q, BrowserStorage, Lo
 		login: login,
 		logout: logout,
 		isAuthenticated: isAuthenticated,
-		getAuthenticationToken,
 		updateAuthenticationStatus: updateAuthenticationStatus
 	};
 
 	return authenticationService;
 }
 
-authenticationService.$inject = ['$rootScope', '$q', 'BrowserStorage', 'LoginService'];
+authenticationService.$inject = ['$rootScope', '$q', 'UserCredentialsService', 'LoginService'];

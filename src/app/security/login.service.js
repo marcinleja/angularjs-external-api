@@ -7,16 +7,16 @@ export default class LoginService {
 
 	login(credentials) {
 
-		let requestData = {
+		let loginData = {
 			username: credentials.username,
 			password: credentials.password
 		}
 
-		return this.$http.post(this.apiUrl + '/login', requestData);
+		return this.$http.post(`${this.apiUrl}/login`, loginData);
 	}
 
 	logout(AuthToken) {
-		return this.$http.post(this.apiUrl + '/logout', {authToken: AuthToken});
+		return this.$http.post(`${this.apiUrl}/logout`, {authToken: AuthToken});
 	}
 }
 

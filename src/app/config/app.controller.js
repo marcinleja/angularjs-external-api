@@ -1,6 +1,8 @@
 export default class ApplicationController {
-	constructor(AuthenticationService) {
+	
+	constructor(AuthenticationService, $state) {
 		this.AuthenticationService = AuthenticationService;
+		this.$state = $state;
 	}
 
 	logout() {
@@ -8,4 +10,4 @@ export default class ApplicationController {
 	}
 }
 
-ApplicationController.$inject = ['AuthenticationService'];
+ApplicationController.$inject = ['AuthenticationService', '$state'];

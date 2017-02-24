@@ -1,1 +1,22 @@
-Contacts page...
+<table class="table table-striped header-fixed">
+    <thead class="table_header">
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Phone Number</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody class="table_body">
+        <tr ng-repeat="contact in vm.contacts" class="contact-row">
+            <td class="contact-type-icon"><i class="fa fa-user-circle fa-2x" aria-hidden="true"></i></td>
+            <td>{{contact.displayName}}</td>
+            <td>
+                <span ng-if="contact.phoneNumbers.length > 0">{{ contact.phoneNumbers[contact.phoneNumbers.length-1].number }}</span>
+            </td>
+            <td>
+                <span ng-if="contact.phoneNumbers.length > 0">{{ contact.emails[contact.emails.length-1].email }}</span>
+            </td>
+        </tr>
+    </tbody>
+</table>

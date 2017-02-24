@@ -3,12 +3,11 @@ import {EVENTS} from './events';
 export default function requestsInterceptor(
 	$q,
 	$rootScope,
-	BrowserStorage) {
-
+	UserCredentialsService) {
 
 	var interceptor = {
 		request: (config) => {
-			// config.headers['authToken'] = this.BrowserStorage.loginTokenCookie;
+			config.headers['authToken'] = UserCredentialsService.getAuthenticationToken();
 			return config;
 		},
 		response: (response) => {
@@ -26,4 +25,4 @@ export default function requestsInterceptor(
 	return interceptor;
 }
 
-requestsInterceptor.$inject = ['$q', '$rootScope', 'BrowserStorage'];
+requestsInterceptor.$inject = ['$q', '$rootScope', 'UserCredentialsService'];
