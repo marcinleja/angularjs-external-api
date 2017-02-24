@@ -49,6 +49,8 @@ export default function authenticationService($rootScope, $q, UserCredentialsSer
 		$rootScope.$broadcast(EVENTS.USER_LOGGED_OUT);
 	}
 
+	$rootScope.$on(EVENTS.UNAUTHORIZED_REQUEST_OCCURED, _clearAuthenticationData);
+
 	authenticationService = {
 		login: login,
 		logout: logout,
